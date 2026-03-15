@@ -1,4 +1,5 @@
-import { LayoutDashboard, Brain, Calculator, Shield, Target, Trophy } from "lucide-react";
+import { LayoutDashboard, Brain, Calculator, Shield, Target, Trophy, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface AppSidebarProps {
   activeSection: string;
@@ -15,6 +16,8 @@ const navItems = [
 ];
 
 const AppSidebar = ({ activeSection, onSectionChange }: AppSidebarProps) => {
+  const { user, signOut } = useAuth();
+
   return (
     <aside className="hidden lg:flex flex-col w-64 border-r border-border bg-card p-4 min-h-screen">
       <div className="mb-8">
@@ -41,6 +44,18 @@ const AppSidebar = ({ activeSection, onSectionChange }: AppSidebarProps) => {
           );
         })}
       </nav>
+      <div className="border-t border-border pt-4 space-y-3">
+        <div className="px-3">
+          <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+        </div>
+        <button
+          onClick={signOut}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
+        >
+          <LogOut className="h-4 w-4" />
+          Sign Out
+        </button>
+      </div>
     </aside>
   );
 };
